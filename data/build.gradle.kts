@@ -1,13 +1,15 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-//    id ("dagger.hilt.android.plugin")
-//    id 'kotlin-kapt'
+    id("com.google.dagger.hilt.android")
+    // hilt
+    // kapt
+    id ("kotlin-kapt")
 }
 
 android {
     namespace = "com.example.data"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 28
@@ -54,8 +56,10 @@ dependencies {
     // hilt
     implementation( "com.google.dagger:hilt-android:2.44")
     implementation("androidx.test:monitor:1.6.0")
-//    kapt "com.google.dagger:hilt-android-compiler:2.44"
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
 
 
-
+}
+kapt {
+    correctErrorTypes = true
 }

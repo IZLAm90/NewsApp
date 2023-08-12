@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-//    id("dagger.hilt.android.plugin")
+    id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
 }
 
@@ -50,6 +50,9 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.5.7")
     implementation("androidx.activity:activity-ktx:1.7.1")
     implementation("com.google.dagger:hilt-android:2.44")
-//    kapt "com.google.dagger:hilt-android-compiler:2.44"
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation(project(":data"))
+}
+kapt {
+    correctErrorTypes = true
 }

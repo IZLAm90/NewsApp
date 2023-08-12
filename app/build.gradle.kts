@@ -1,8 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
     // hilt
-//    id ("dagger.hilt.android.plugin")
     // kapt
     id ("kotlin-kapt")
 }
@@ -72,10 +72,14 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":di"))
     implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.0")
     implementation("androidx.fragment:fragment-ktx:1.5.7")
     implementation("androidx.activity:activity-ktx:1.7.1")
     implementation("androidx.navigation:navigation-runtime:2.7.0")
 
+}
+kapt {
+    correctErrorTypes = true
 }
