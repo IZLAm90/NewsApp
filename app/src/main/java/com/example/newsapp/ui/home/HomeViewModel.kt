@@ -1,5 +1,6 @@
 package com.example.newsapp.ui.home
 
+import android.util.Log
 import com.app.data.remote.NetWorkState
 import com.example.base.BaseViewModel
 import com.example.domain.NewsUseCase
@@ -20,11 +21,15 @@ class HomeViewModel @Inject constructor(private val useCase:NewsUseCase) : BaseV
     fun getNewsHeadLines(country:String,key:String){
         executeSharedApi(_newsFlow){
             useCase.getHeadLines(country,key).onStart {
+                Log.d("islam", "getNewsHeadLines: start ")
                 _newsFlow.emit(NetWorkState.Loading)
             }
                 .catch { _newsFlow.emit(NetWorkState.Error(it)) }
                 .onCompletion { _newsFlow.emit(NetWorkState.StopLoading) }
-//                .collectLatest { _newsFlow.emit(NetWorkState.Success(it)) }
+                .collectLatest {
+                    Log.d("islam", "getNewsHeadLines: ")
+//                    _newsFlow.emit(NetWorkState.Success(it))
+                                    }
         }
     }
 }

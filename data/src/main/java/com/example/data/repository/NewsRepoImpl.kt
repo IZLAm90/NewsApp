@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class NewsRepoImpl @Inject constructor(private val api:UserApi):NewsRepo {
-    override suspend fun getHeadLines(country: String, apiKey: String) = flow { emit(api.getHeadLines(country,apiKey))  }
+    override suspend fun getHeadLines(country: String, apiKey: String) = flow { emit(api.getHeadLines(apiKey))  }
 }

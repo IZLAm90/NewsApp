@@ -7,9 +7,9 @@ import retrofit2.http.Query
 
 
 interface UserApi {
-    @GET("top-headlines")
+    @GET("everything?q=bitcoin")
     suspend fun getHeadLines(
-        @Query("country")  country :String,
+//        @Query("country")  country :String,
         @Query("apiKey")  apiKey :String
     ):Response<Any>
 }
