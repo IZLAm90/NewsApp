@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.app.data.remote.Constants
 import com.example.base.R
 import com.example.base.databinding.ActivityBaseBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -66,6 +68,32 @@ abstract class BaseActivity(private val layoutResource: Int) : AppCompatActivity
         super.onDestroy()
         viewBase = null
     }
+    fun handleErrorGeneral(th: Throwable, func: (() -> Unit)? = null): CustomErrorThrow? {
+        th.printStackTrace()
+
+        when (th.message) {
+            Constants.ERROR_API.BAD_REQUEST -> {
+                Toast.makeText(this, "bad request", Toast.LENGTH_SHORT).show()
+            }
+            Constants.ERROR_API.UNAUTHRIZED -> {
+                // no need
+                Toast.makeText(this, "unauth", Toast.LENGTH_SHORT).show()
+            }
+
+            else -> {
+                if (th.cause is CustomErrorThrow) {
+                    val cause = th.cause as CustomErrorThrow
+                    Toast.makeText(this, cause.value, Toast.LENGTH_SHORT).show()
+                    return cause
+
+                } else {
+                    Toast.makeText(this, "${th.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        return null
+    }
+
 
     fun hideKeyboard() {
         lifecycleScope.launch(Dispatchers.Main) {
@@ -77,3 +105,5 @@ abstract class BaseActivity(private val layoutResource: Int) : AppCompatActivity
         }
     }
 }
+
+data class CustomErrorThrow(val key:String,val value:String):Throwable()

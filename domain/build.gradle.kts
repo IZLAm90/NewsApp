@@ -46,6 +46,10 @@ dependencies {
     implementation(project(":data"))
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
+    implementation(project(":data"))
+
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
     implementation( "com.google.dagger:hilt-android:2.44")
     implementation ("androidx.activity:activity-ktx:1.7.1")

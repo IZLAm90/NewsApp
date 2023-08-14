@@ -11,9 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.app.data.remote.NetWorkState
 import com.example.base.databinding.ErrorDialogBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -74,9 +76,9 @@ abstract class BaseFragment(private val layout: Int) : Fragment() {
 //        }
     }
 
-//    protected fun handleErrorGeneral(th: Throwable, func: (() -> Unit)? = null): CustomErrorThrow? {
-//        return baseActivity?.handleErrorGeneral(th, func)
-//    }
+    protected fun handleErrorGeneral(th: Throwable, func: (() -> Unit)? = null): CustomErrorThrow? {
+        return baseActivity?.handleErrorGeneral(th, func)
+    }
 
 
     fun <T> Fragment.handleFlow(
@@ -93,15 +95,35 @@ abstract class BaseFragment(private val layout: Int) : Fragment() {
         }
     }
 
-//    fun Fragment.handleSharedFlow(
-//        userFlow: SharedFlow<NetWorkState>,
-//        onShowProgress: (() -> Unit)? = null,
-//        onHideProgress: (() -> Unit)? = null,
-//        onSuccess: (data: Any) -> Unit,
-//        onError: ((th: Throwable) -> Unit)? = null
-//    ) {
-//        (activity as BaseActivity).handleSharedFlow(userFlow, onShowProgress, onHideProgress, onSuccess,onError)
-//    }
+    fun Fragment.handleSharedFlow(
+        userFlow: SharedFlow<NetWorkState>,
+        lifeCycle: Lifecycle.State = Lifecycle.State.STARTED,
+        onShowProgress: (() -> Unit)? = null,
+        onHideProgress: (() -> Unit)? = null,
+        onSuccess: (data: Any) -> Unit,
+        onError: ((th: Throwable) -> Unit)? = null
+    ) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(lifeCycle) {
+                userFlow.collect { networkState ->
+                    when (networkState) {
+                        is NetWorkState.Success<*> -> {
+                            onSuccess(networkState.data!!)
+                        }
+                        is NetWorkState.Error -> {
+                            if (onError == null) handleErrorGeneral(networkState.th) else onError(
+                                networkState.th
+                            )
+                        }
+
+                        else -> {
+                        }
+                    }
+
+                }
+            }
+        }
+    }
 
  /*   fun Fragment.handleStateFlow(
         userFlow: StateFlow<NetWorkState>,

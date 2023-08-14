@@ -10,5 +10,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         Constants.PrefKeys.BASE_URL = BuildConfig.BASE_URL
+        Constants.PrefKeys.APP_KEY = BuildConfig.API_KEY
     }
 }

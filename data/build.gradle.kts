@@ -5,6 +5,8 @@ plugins {
     // hilt
     // kapt
     id ("kotlin-kapt")
+    id ("kotlinx-serialization")
+    id ("kotlin-parcelize")
 }
 
 android {
@@ -52,13 +54,16 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp-urlconnection")
     implementation( "com.squareup.okhttp3:logging-interceptor")
 
+    implementation( "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+
 
     // hilt
     implementation( "com.google.dagger:hilt-android:2.44")
     implementation("androidx.test:monitor:1.6.0")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
-
+    implementation("androidx.room:room-ktx:2.4.2")
+    kapt ("androidx.room:room-compiler:2.4.2")
 }
 kapt {
     correctErrorTypes = true

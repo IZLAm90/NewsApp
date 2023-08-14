@@ -18,17 +18,25 @@ class HomeViewModel @Inject constructor(private val useCase:NewsUseCase) : BaseV
     private val _newsFlow = MutableStateFlow<NetWorkState>(NetWorkState.Loading)
     val prayersFlow = _newsFlow.asSharedFlow()
 
-    fun getNewsHeadLines(country:String,key:String){
+    fun getNewsHeadLines( page: Int,
+                          pageSize: Int,
+                          lang: String,
+                          apiKey: String,
+                          q: String?){
         executeSharedApi(_newsFlow){
-            useCase.getHeadLines(country,key).onStart {
-                Log.d("islam", "getNewsHeadLines: start ")
+            useCase.getHeadLines(apiKey,q).onStart {
+                Log.d("islam", "getNewsHeadLines : Loading ")
                 _newsFlow.emit(NetWorkState.Loading)
             }
-                .catch { _newsFlow.emit(NetWorkState.Error(it)) }
-                .onCompletion { _newsFlow.emit(NetWorkState.StopLoading) }
+                .catch {
+                    Log.d("islam", "getNewsHeadLines : ${it} ")
+                    _newsFlow.emit(NetWorkState.Error(it)) }
+                .onCompletion {
+                    Log.d("islam", "getNewsHeadLines : ${NetWorkState.StopLoading} ")
+                    _newsFlow.emit(NetWorkState.StopLoading) }
                 .collectLatest {
-                    Log.d("islam", "getNewsHeadLines: ")
-//                    _newsFlow.emit(NetWorkState.Success(it))
+                    Log.d("islam", "getNewsHeadLines: ${it.articles} ")
+                    _newsFlow.emit(NetWorkState.Success(it.articles))
                                     }
         }
     }

@@ -4,6 +4,7 @@ package com.app.data.remote
 object Constants {
     object PrefKeys {
         var BASE_URL = ""
+        var APP_KEY = ""
         const val TOKEN = "TOKEN"
         const val USER: String = "user"
     }
