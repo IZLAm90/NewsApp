@@ -13,6 +13,12 @@ interface NewsRepo {
 
         suspend fun getHeadLines( apiKey: String,q:String?= null):Flow<Response<NewAppData>>
 
+
+        suspend fun saveToDB(array: List<NewData>)
+
+        suspend fun getFromDB(): List<NewData>
+        suspend fun resetDB()
+
 //        suspend fun getHeadLines(page: Int,pageSize:Int,lang:String, apiKey: String,q:String?= null):
 //                Flow<Response<BaseEndPointResponse<NewAppData>>>
 
