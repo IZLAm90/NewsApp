@@ -13,15 +13,6 @@ class NewsRepoImpl @Inject constructor(private val api:UserApi):NewsRepo {
         q: String?
     )= flow {
         emit(api.getHeadLines( apiKey,q))
-//        emit(api.getTopHeadLines( "EG",apiKey))
     }
-//            Flow<Response<List<NewData>>> {
-//       return flow {
-//           emit(api.getHeadLines( apiKey))
-//           emit(api.getTopHeadLines( "EG",apiKey))
-//           emit(api.getHeadLines(page,pageSize,lang, apiKey,q?:"bitcoin"))
-//       }
-//    }
-
 
 }

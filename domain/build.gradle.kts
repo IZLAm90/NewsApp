@@ -38,6 +38,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     testImplementation("junit:junit:4.13.2")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     // indicator
@@ -56,5 +57,13 @@ dependencies {
     //navigation component
     implementation ("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation ("androidx.navigation:navigation-ui-ktx:2.5.3")
+    // Turbine is a small testing library for kotlinx.coroutines
+    testImplementation("app.cash.turbine:turbine:0.7.0")
+    // mockito
+    testImplementation("org.mockito:mockito-inline:2.21.0")
+    testImplementation("org.mockito:mockito-core:4.0.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
+
+
 
 }

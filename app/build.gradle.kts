@@ -80,7 +80,12 @@ dependencies {
     implementation("androidx.navigation:navigation-runtime:2.7.0")
     implementation("com.github.bumptech.glide:glide:4.14.2")
     kapt ("com.github.bumptech.glide:compiler:4.12.0")
-
+    // Turbine is a small testing library for kotlinx.coroutines
+    testImplementation("app.cash.turbine:turbine:0.7.0")
+    // mockito
+    testImplementation("org.mockito:mockito-inline:2.21.0")
+    testImplementation("org.mockito:mockito-core:4.0.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
 
 }
 kapt {
