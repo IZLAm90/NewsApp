@@ -49,6 +49,9 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.6")
     implementation(project(":domain"))
     implementation(project(":data"))
+
+    implementation("androidx.room:room-ktx:2.4.2")
+    kapt ("androidx.room:room-compiler:2.4.2")
 }
 kapt {
     correctErrorTypes = true
