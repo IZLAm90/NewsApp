@@ -3,15 +3,19 @@ package com.example.domain
 import android.util.Log
 import com.app.data.remote.Constants
 import com.example.data.model.BaseEndPointResponse
+import com.example.data.model.BaseResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.transform
 import retrofit2.Response
 
-inline fun <T, R> Flow<Response<BaseEndPointResponse<T>>>.transformResponseData(
+inline fun <T, R> Flow<Response<BaseResponse<T>>>.transformResponseData(
     crossinline onSuccess: suspend FlowCollector<R>.(T) -> Unit
 ): Flow<R> {
     return transform { response ->
+        Log.d("islam", "transformResponseData errorBody:  ${response.errorBody()}")
+        Log.d("islam", "transformResponseData  body :  ${response.body()}")
+
         when {
             response.isSuccessful && response.body() != null && response.code() in 200..299 -> {
                 Log.d("islam", "transformResponseData 200 : ${response.body()?.data} ")
@@ -19,7 +23,7 @@ inline fun <T, R> Flow<Response<BaseEndPointResponse<T>>>.transformResponseData(
             }
             response.isSuccessful && response.body() != null && response.body()!!.code !in 200..299 -> {
                 Log.d("islam", "transformResponseData : ${response.body()} ")
-                onSuccess(response.body()!!.status!! as T)
+                onSuccess(response.body()!!.data!! as T)
             }
             response.code() == 401 -> {
                 Log.d("islam", "transformResponseData : ${response.code()} ")

@@ -7,3 +7,8 @@ data class BaseEndPointResponse<T>(
     @SerializedName("status") var status: String? = null,
     @SerializedName("data") var data: T? = null
 )
+data class BaseResponse<T>(
+    val code: Int? = null,
+    val msg: String? = "",
+    val data: T? = null
+)

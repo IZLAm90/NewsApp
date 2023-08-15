@@ -4,7 +4,6 @@ import android.util.Log
 import com.app.data.remote.UserApi
 import com.google.gson.GsonBuilder
 import com.patient.data.cashe.PreferencesGateway
-
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,7 +50,7 @@ object NetWorkModule {
             return@addNetworkInterceptor chain.proceed(request)
         }
 //        if (BuildConfig.DEBUG) {
-//            okHttpClient.addInterceptor(loggingInterceptor)
+            okHttpClient.addInterceptor(loggingInterceptor)
 //        }
         okHttpClient.build()
         return okHttpClient.build()

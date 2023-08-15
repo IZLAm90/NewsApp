@@ -14,30 +14,30 @@ import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val useCase:NewsUseCase) : BaseViewModel()  {
+class HomeViewModel @Inject constructor(private val useCase: NewsUseCase) : BaseViewModel() {
     private val _newsFlow = MutableStateFlow<NetWorkState>(NetWorkState.Loading)
     val prayersFlow = _newsFlow.asSharedFlow()
 
-    fun getNewsHeadLines( page: Int,
-                          pageSize: Int,
-                          lang: String,
-                          apiKey: String,
-                          q: String?){
-        executeSharedApi(_newsFlow){
-            useCase.getHeadLines(apiKey,q).onStart {
-                Log.d("islam", "getNewsHeadLines : Loading ")
+    fun getNewsHeadLines(
+        page: Int,
+        pageSize: Int,
+        lang: String,
+        apiKey: String,
+        q: String?
+    ) {
+        executeSharedApi(_newsFlow) {
+            useCase.getHeadLines(apiKey, q).onStart {
                 _newsFlow.emit(NetWorkState.Loading)
             }
                 .catch {
-                    Log.d("islam", "getNewsHeadLines : ${it} ")
-                    _newsFlow.emit(NetWorkState.Error(it)) }
+                    _newsFlow.emit(NetWorkState.Error(it))
+                }
                 .onCompletion {
-                    Log.d("islam", "getNewsHeadLines : ${NetWorkState.StopLoading} ")
-                    _newsFlow.emit(NetWorkState.StopLoading) }
+                    _newsFlow.emit(NetWorkState.StopLoading)
+                }
                 .collectLatest {
-                    Log.d("islam", "getNewsHeadLines: ${it.articles} ")
-                    _newsFlow.emit(NetWorkState.Success(it.articles))
-                                    }
+                    _newsFlow.emit(NetWorkState.Success(it?.articles))
+                }
         }
     }
 }

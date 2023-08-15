@@ -1,5 +1,6 @@
 package com.example.newsapp.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import com.example.newsapp.helper.loadImage
 class NewsAdapter :
     RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
     private val list = ArrayList<NewData>()
+    var onItemClicked: ((NewData) -> Unit)? = null
 
     inner class ViewHolder(private val binding:ItemsBinding ) :
         RecyclerView.ViewHolder(binding.root) {
@@ -19,6 +21,9 @@ class NewsAdapter :
                 tvSource.text = data.source.name
                 tvDate.text =data.convertDate(data.publishedAt)
                 data.urlToImage?.let { image.loadImage(it) }
+                root.setOnClickListener {
+                    onItemClicked?.invoke(data)
+                }
             }
         }
     }
@@ -36,5 +41,8 @@ class NewsAdapter :
 
     fun AddAll(data : List<NewData>){
         list.addAll(data)
+        notifyDataSetChanged()
+
+        Log.d("islam", "AddAll list : ${list} ")
     }
 }
