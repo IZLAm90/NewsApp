@@ -1,10 +1,15 @@
 package com.example.newsapp.ui.home
 
+import app.cash.turbine.test
+import com.app.data.remote.Constants
+import com.app.data.remote.Constants.PrefKeys.APP_KEY
 import com.app.data.remote.NetWorkState
+import com.example.data.model.NewAppData
 import com.example.data.model.NewData
 import com.example.data.model.Source
 import com.example.data.repository.NewsRepo
 import com.example.domain.NewsUseCase
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.*
@@ -33,14 +38,41 @@ class HomeViewModelTest {
     }
     @org.junit.Test
     fun `getNews with valid response`() = coroutineRule.runBlockingTest {
-        val fakeData = arrayListOf(createSampleNewsData())
-//        Mockito.`when`(
-//            useCase.getHeadLines(apiKey, q)
-//        ).thenReturn(flowOf(fakeData))
-
+        val fakeData = NewAppData("ok",createSampleNewsData().size,createSampleNewsData())
+        Mockito.`when`(
+            useCase.getHeadLines( APP_KEY
+                , "q")
+        ).thenReturn(flowOf(fakeData))
+        viewModel.newsFlow.test {
+            viewModel.getNewsHeadLines(1,15,"en",APP_KEY,"q")
+            assertEquals(awaitItem(),NetWorkState.Loading)
+            assertEquals(awaitItem(),NetWorkState.Success(fakeData))
+            assertEquals(awaitItem(),NetWorkState.StopLoading)
+            expectNoEvents()
+        }
 
     }
-    fun createSampleNewsData(): List<NewData> {
+
+    @org.junit.Test
+    fun `getNews with bad request`() = coroutineRule.runBlockingTest {
+        val error= Throwable(Constants.ERROR_API.BAD_REQUEST)
+        Mockito.`when`(
+            useCase.getHeadLines(
+                APP_KEY, "q"
+            )
+        ).thenReturn(flow { throw error })
+
+        viewModel.newsFlow.test {
+            viewModel.getNewsHeadLines(1,15,"en",APP_KEY,"q")
+            assertEquals(awaitItem(), NetWorkState.Loading)
+            assertEquals(awaitItem(), NetWorkState.Success(null))
+            val result = awaitItem() as NetWorkState.Error
+            assertEquals(error, result.th)
+            assertEquals(awaitItem(), NetWorkState.StopLoading)
+            expectNoEvents()
+        }
+    }
+    fun createSampleNewsData(): ArrayList<NewData> {
         val source = Source(name = "Sample Source")
         val newData1 = NewData(
             id = 1,
@@ -66,7 +98,7 @@ class HomeViewModelTest {
         )
         // Add more sample NewData objects as needed
 
-        return listOf(newData1, newData2)
+        return arrayListOf(newData1, newData2)
     }
 
 //    @Test
