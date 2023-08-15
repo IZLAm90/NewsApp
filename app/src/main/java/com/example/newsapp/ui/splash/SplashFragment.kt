@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,8 +28,8 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         CoroutineScope(Dispatchers.IO).launch {
             delay(1000)
-            withContext(Dispatchers.Main){
-
+            withContext(Dispatchers.Main) {
+                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
             }
         }
     }
