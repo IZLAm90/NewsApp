@@ -40,7 +40,10 @@ class NewsAdapter :
 
 
     fun AddAll(data : List<NewData>){
-        list.addAll(data)
+        list.apply {
+            clear()
+            addAll(data)
+        }
         notifyDataSetChanged()
 
         Log.d("islam", "AddAll list : ${list} ")

@@ -1,6 +1,5 @@
 package com.example.newsapp.ui.home
 
-import android.util.Log
 import com.app.data.remote.NetWorkState
 import com.example.base.BaseViewModel
 import com.example.domain.NewsUseCase
@@ -16,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val useCase: NewsUseCase) : BaseViewModel() {
     private val _newsFlow = MutableStateFlow<NetWorkState>(NetWorkState.Loading)
-    val prayersFlow = _newsFlow.asSharedFlow()
+    val newsFlow = _newsFlow.asSharedFlow()
 
     fun getNewsHeadLines(
         page: Int,
@@ -39,5 +38,9 @@ class HomeViewModel @Inject constructor(private val useCase: NewsUseCase) : Base
                     _newsFlow.emit(NetWorkState.Success(it?.articles))
                 }
         }
+    }
+    fun clearData(){
+        executeSharedApi(_newsFlow)
+        { _newsFlow.emit(NetWorkState.Loading) }
     }
 }

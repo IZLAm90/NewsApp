@@ -1,22 +1,16 @@
 package com.example.newsapp.ui.home
 
 import android.os.Bundle
-import android.provider.SyncStateContract.Constants
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.data.model.NewData
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentHomeBinding
+import com.example.newsapp.helper.isEditTextValid
 import com.example.newsapp.ui.adapter.NewsAdapter
-import com.example.newsapp.ui.detailes.DetailsFragment
 import com.patient.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment(R.layout.fragment_home) {
@@ -35,17 +29,27 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         getAllData()
         setUpNewRv()
         binding.btnSearch.setOnClickListener{
-            viewModel.getNewsHeadLines(1,15,"EN", com.app.data.remote.Constants.PrefKeys.APP_KEY ,null)
+            if(binding.etQuery.isEditTextValid()) {
+                viewModel.getNewsHeadLines(
+                    1,
+                    15,
+                    "EN",
+                    com.app.data.remote.Constants.PrefKeys.APP_KEY,
+                    binding.etQuery.text.toString()
+                )
+            viewModel.clearData()
+            }
         }
     }
+
     fun getAllData(){
-        viewModel.getNewsHeadLines(1,15,"EN", com.app.data.remote.Constants.PrefKeys.APP_KEY ,null)
+        viewModel.getNewsHeadLines(1,15,"EN", com.app.data.remote.Constants.PrefKeys.APP_KEY ,"n")
     }
 
     fun setUpNewRv(){
         binding.recyclerView.adapter=adapter
         binding.recyclerView.setHasFixedSize(false)
-        handleSharedFlow(viewModel.prayersFlow, onSuccess = {
+        handleSharedFlow(viewModel.newsFlow, onSuccess = {
             it as List<NewData>
             adapter.AddAll(it)
         })

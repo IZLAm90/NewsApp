@@ -12,7 +12,7 @@ class NewsRepoImpl @Inject constructor(private val api:UserApi):NewsRepo {
         apiKey: String,
         q: String?
     )= flow {
-        emit(api.getHeadLines( apiKey,"d"))
+        emit(api.getHeadLines( apiKey,q))
 //        emit(api.getTopHeadLines( "EG",apiKey))
     }
 //            Flow<Response<List<NewData>>> {

@@ -17,7 +17,7 @@ interface UserApi {
 //        @Query("pageSize") pageSize: Int,
 //        @Query("language") language: String,
         @Query("apiKey") apiKey: String,
-        @Query("q") searchValue: String="b"
+        @Query("q") searchValue: String?= null
     ):Response<NewAppData>
     @GET("top-headlines")
     suspend fun getTopHeadLines(
