@@ -11,7 +11,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 interface NewsRepo {
 
-        suspend fun getHeadLines( apiKey: String,q:String?= null):Flow<Response<NewAppData>>
+        suspend fun getHeadLines( apiKey: String,q:String?= null,sortedBy:String?=null):Flow<Response<NewAppData>>
 
 
         suspend fun saveToDB(array: List<NewData>)

@@ -11,9 +11,10 @@ import javax.inject.Inject
 class NewsRepoImpl @Inject constructor(private val api:UserApi , private val room: NewsDB):NewsRepo {
     override suspend fun getHeadLines(
         apiKey: String,
-        q: String?
+        q: String?,
+        sortedBy:String?
     )= flow {
-        emit(api.getHeadLines( apiKey,q))
+        emit(api.getHeadLines( apiKey,q,sortedBy))
     }
 
     override suspend fun saveToDB(array: List<NewData>) {

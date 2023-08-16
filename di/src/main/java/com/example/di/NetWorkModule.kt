@@ -1,6 +1,7 @@
 package com.example.di
 
 import android.util.Log
+import com.app.data.remote.Constants
 import com.app.data.remote.UserApi
 import com.google.gson.GsonBuilder
 import com.patient.data.cashe.PreferencesGateway
@@ -14,7 +15,9 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-const val TAG="NetWorkModule"
+
+const val TAG = "NetWorkModule"
+
 @Module
 @InstallIn(SingletonComponent::class)
 object NetWorkModule {
@@ -22,6 +25,7 @@ object NetWorkModule {
     fun providesLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
+
     @Provides
     fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
@@ -33,25 +37,17 @@ object NetWorkModule {
         okHttpClient.readTimeout(60, TimeUnit.SECONDS)
         okHttpClient.writeTimeout(60, TimeUnit.SECONDS)
         okHttpClient.addNetworkInterceptor { chain ->
-//            val token = gateway.load(TOKEN, "")
             val original = chain.request()
             val requestBuilder = original.newBuilder()
                 .method(original.method, original.body)
-
             requestBuilder.addHeader("Content-Type", "application/json")
-//            requestBuilder.addHeader("Authorization", "Basic U2VjbG9naW5JZC8yLEJyYW5jaElkLzEsbGluay8xMDE1NixXb3JrRmxvd1BhdGgvMjMyNi00MDYsRm9yRGVidWcvbnVsbCxBY2NvdW50SWQvMSxCcmFuY2hlc0Fyci91bmRlZmluZWQ=")
-//            "if (token.isNullOrBlank().not()) {
-//                requestBuilder.addHeader("Authorization", token!!)
-//            }"
-
             val request = requestBuilder
                 .build()
             Log.d(TAG, "provideOkHttpClient: ${request}")
             return@addNetworkInterceptor chain.proceed(request)
         }
-//        if (BuildConfig.DEBUG) {
-            okHttpClient.addInterceptor(loggingInterceptor)
-//        }
+
+        okHttpClient.addInterceptor(loggingInterceptor)
         okHttpClient.build()
         return okHttpClient.build()
     }
@@ -63,7 +59,7 @@ object NetWorkModule {
 
     @Provides
     fun providesBaseUrl(): String {
-        return "https://newsapi.org/v2/"
+        return Constants.PrefKeys.BASE_URL
     }
 
     @Provides

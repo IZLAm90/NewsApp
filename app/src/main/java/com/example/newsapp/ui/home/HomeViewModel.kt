@@ -21,15 +21,12 @@ class HomeViewModel @Inject constructor(private val useCase: NewsUseCase) : Base
     private val _newsFlow = MutableStateFlow<NetWorkState>(NetWorkState.Loading)
     val newsFlow = _newsFlow.asSharedFlow()
     fun getNewsHeadLines(
-        page: Int,
-        pageSize: Int,
-        lang: String,
         apiKey: String,
         q: String?,
-        isSearch:Boolean = false
+        sortedBy: String?,
     ) {
         executeSharedApi(_newsFlow) {
-            useCase.getHeadLines(apiKey, q).onStart {
+            useCase.getHeadLines(apiKey, q,sortedBy).onStart {
                 _newsFlow.emit(NetWorkState.Loading)
 //                Log.d("islam", "getNewsHeadLines: ${useCase.loadFromDb()} ")
                 _newsFlow.emit(NetWorkState.Success(useCase.loadFromDb()))
@@ -42,11 +39,11 @@ class HomeViewModel @Inject constructor(private val useCase: NewsUseCase) : Base
                 }
                 .collectLatest {
 //                    _newsFlow.emit(NetWorkState.Success(useCase.loadFromDb()))
-                    if (isSearch){
-                        _newsFlow.emit(NetWorkState.Success(it?.articles?.sortedByDescending { it.publishedAt }))
-                    }else {
+//                    if (isSearch){
+//                        _newsFlow.emit(NetWorkState.Success(it?.articles?.sortedByDescending { it.publishedAt }))
+//                    }else {
                         _newsFlow.emit(NetWorkState.Success(it?.articles))
-                    }
+//                    }
                 }
         }
     }

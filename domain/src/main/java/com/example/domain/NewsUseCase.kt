@@ -12,8 +12,10 @@ import javax.inject.Inject
 class NewsUseCase @Inject constructor(private val repo: NewsRepo) {
     suspend fun getHeadLines(
                               apiKey: String,
-                              q: String?) : Flow<NewAppData?> {
-        val responce=repo.getHeadLines(apiKey, q).map {
+                              q: String?,
+                              sortedBy:String?
+    ) : Flow<NewAppData?> {
+        val responce=repo.getHeadLines(apiKey, q,sortedBy).map {
             it.body()
         }
         responce.collect{

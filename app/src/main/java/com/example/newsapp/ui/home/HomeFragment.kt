@@ -14,6 +14,7 @@ import com.example.newsapp.ui.adapter.NewsAdapter
 import com.patient.base.BaseFragment
 import com.patient.data.cashe.PreferencesGateway
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment(R.layout.fragment_home) {
@@ -37,11 +38,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         binding.btnSearch.setOnClickListener {
             if (binding.etQuery.isEditTextValid()) {
                 viewModel.getNewsHeadLines(
-                    1,
-                    15,
-                    "EN",
                     com.app.data.remote.Constants.PrefKeys.APP_KEY,
-                    binding.etQuery.text.toString(),true
+                    binding.etQuery.text.toString(), sortedBy = "publishedAt"
                 )
                 viewModel.clearData()
             }
@@ -63,7 +61,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     }
 
     fun getAllData() {
-        viewModel.getNewsHeadLines(1, 15, "EN", com.app.data.remote.Constants.PrefKeys.APP_KEY, "n")
+        viewModel.getNewsHeadLines( com.app.data.remote.Constants.PrefKeys.APP_KEY, "n", sortedBy = null)
     }
 
     fun setUpNewRv() {

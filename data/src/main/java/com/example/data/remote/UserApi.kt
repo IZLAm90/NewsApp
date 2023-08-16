@@ -13,11 +13,9 @@ import retrofit2.http.Query
 interface UserApi {
     @GET("everything")
     suspend fun getHeadLines(
-//        @Query("page") page: Int,
-//        @Query("pageSize") pageSize: Int,
-//        @Query("language") language: String,
         @Query("apiKey") apiKey: String,
-        @Query("q") searchValue: String?= null
+        @Query("q") searchValue: String?= null,
+        @Query("sortBy") sortBy: String?=null,
     ):Response<NewAppData>
     @GET("top-headlines")
     suspend fun getTopHeadLines(
