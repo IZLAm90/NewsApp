@@ -12,7 +12,7 @@ interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(articles: List<NewData>)
 
-    @Query("SELECT * FROM AllNews")
+    @Query("SELECT * FROM AllNews ORDER BY publishedAt DESC")
     suspend fun getAllArticle(): List<NewData>
 
     @Query("DELETE FROM AllNews")

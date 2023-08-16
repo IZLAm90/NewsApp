@@ -17,7 +17,6 @@ class NewsUseCase @Inject constructor(private val repo: NewsRepo) {
             it.body()
         }
         responce.collect{
-            repo.resetDB()
             it?.articles?.let { it1 -> repo.saveToDB(it1) }
         }
        return responce
