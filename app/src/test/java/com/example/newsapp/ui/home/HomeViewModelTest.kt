@@ -39,10 +39,10 @@ class HomeViewModelTest {
         val fakeData = NewAppData("ok",createSampleNewsData().size,createSampleNewsData())
         Mockito.`when`(
             useCase.getHeadLines( APP_KEY
-                , "q")
+                , "q","")
         ).thenReturn(flowOf(fakeData))
         viewModel.newsFlow.test {
-            viewModel.getNewsHeadLines(1,15,"en",APP_KEY,"q")
+            viewModel.getNewsHeadLines(APP_KEY,"q","")
             assertEquals(awaitItem(),NetWorkState.Loading)
             assertEquals(awaitItem(),NetWorkState.Success(fakeData))
             assertEquals(awaitItem(),NetWorkState.StopLoading)
@@ -56,12 +56,12 @@ class HomeViewModelTest {
         val error= Throwable(Constants.ERROR_API.BAD_REQUEST)
         Mockito.`when`(
             useCase.getHeadLines(
-                APP_KEY, "q"
+                APP_KEY, "q",""
             )
         ).thenReturn(flow { throw error })
 
         viewModel.newsFlow.test {
-            viewModel.getNewsHeadLines(1,15,"en",APP_KEY,"q")
+            viewModel.getNewsHeadLines(APP_KEY,"q","")
             assertEquals(awaitItem(), NetWorkState.Loading)
             assertEquals(awaitItem(), NetWorkState.Success(null))
             val result = awaitItem() as NetWorkState.Error

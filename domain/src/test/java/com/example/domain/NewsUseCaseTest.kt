@@ -57,7 +57,7 @@ class NewsUseCaseTest {
 
          appUseCase.getHeadLines(
             com.app.data.remote.Constants.PrefKeys.APP_KEY,
-            "n"
+            "n",""
         ).collect(){result.add(it)}
 
         // Verify that the emitted data matches the fake data
@@ -82,7 +82,7 @@ class NewsUseCaseTest {
         try{
             appUseCase.getHeadLines(
                 com.app.data.remote.Constants.PrefKeys.APP_KEY,
-                "n"
+                "n",""
             ).single()
         }catch (e:Throwable){
             Assert.assertEquals(Constants.ERROR_API.SERVER_ERROR, e.message)
