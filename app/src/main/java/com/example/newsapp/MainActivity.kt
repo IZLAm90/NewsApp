@@ -17,28 +17,4 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
     }
-
-    override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(newBase)
-        preferenc = applicationContext.let { PreferencesGateway(it) }
-        val theme=preferenc.load("theme","")
-        when(theme){
-            "dark"->{
-                Log.d("islam ", "attachBaseContext: dark")
-                AppCompatDelegate.setDefaultNightMode(
-                    AppCompatDelegate.MODE_NIGHT_YES
-                )
-            }
-            "light"->{
-                Log.d("islam ", "attachBaseContext: light")
-                AppCompatDelegate.setDefaultNightMode(
-                    AppCompatDelegate.MODE_NIGHT_NO
-                )
-            }
-            else->{
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            }
-        }
-
-    }
 }

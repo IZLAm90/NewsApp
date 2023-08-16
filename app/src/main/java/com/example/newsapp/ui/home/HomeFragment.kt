@@ -32,9 +32,18 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
         preferenc = activity?.applicationContext?.let { PreferencesGateway(it) }!!
-
+        if (preferenc.load("theme", "").equals("light")) {
+            binding.them.setImageResource(R.drawable.moon_svgrepo_com)
+        } else {
+            binding.them.setImageResource(R.drawable.moon_svg)
+        }
         getAllData()
         setUpNewRv()
+        search()
+        updateTheme()
+    }
+
+    fun search() {
         binding.btnSearch.setOnClickListener {
             if (binding.etQuery.isEditTextValid()) {
                 viewModel.getNewsHeadLines(
@@ -44,24 +53,35 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                 viewModel.clearData()
             }
         }
+    }
+
+    fun updateTheme() {
 
         binding.them.setOnClickListener {
             if (preferenc.load("theme", "").equals("light")) {
-                preferenc.save("theme", "light")
-                AppCompatDelegate.setDefaultNightMode(
-                    AppCompatDelegate.MODE_NIGHT_NO
-                )
-            }else{
                 preferenc.save("theme", "dark")
+                binding.them.setImageResource(R.drawable.moon_svgrepo_com)
                 AppCompatDelegate.setDefaultNightMode(
                     AppCompatDelegate.MODE_NIGHT_YES
                 )
+
+            } else {
+                preferenc.save("theme", "light")
+                binding.them.setImageResource(R.drawable.moon_svg)
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_NO
+                )
             }
         }
+
     }
 
     fun getAllData() {
-        viewModel.getNewsHeadLines( com.app.data.remote.Constants.PrefKeys.APP_KEY, "n", sortedBy = null)
+        viewModel.getNewsHeadLines(
+            com.app.data.remote.Constants.PrefKeys.APP_KEY,
+            "n",
+            sortedBy = null
+        )
     }
 
     fun setUpNewRv() {
