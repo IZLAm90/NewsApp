@@ -12,11 +12,9 @@ import com.example.domain.NewsUseCase
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
-
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
@@ -101,28 +99,4 @@ class HomeViewModelTest {
         return arrayListOf(newData1, newData2)
     }
 
-//    @Test
-//    fun `test fetching news headlines`() = testScope.runBlockingTest {
-//        // Given
-//        val apiKey = "your-api-key"
-//        val q = "your-query"
-//        val sampleNewsData: List<NewData> = ... // Create sample data for testing
-//
-//        val flow: Flow<NetWorkState> = flow {
-//            emit(NetWorkState.Loading)
-//            emit(NetWorkState.Success(sampleNewsData))
-//        }
-//
-//        whenever(mockUseCase.getHeadLines(apiKey, q)).thenReturn(flow)
-//
-//        val observer: Observer<NetWorkState> = mock()
-//        viewModel.newsFlow.observeForever(observer)
-//
-//        // When
-//        viewModel.getNewsHeadLines(1, 10, "en", apiKey, q)
-//
-//        // Then
-//        verify(observer).onChanged(NetWorkState.Loading)
-//        verify(observer).onChanged(NetWorkState.Success(sampleNewsData))
-//    }
 }

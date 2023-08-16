@@ -20,6 +20,7 @@ class NewsAdapter :
                 tvTitle.text = data.title
                 tvSource.text = data.source.name
                 tvDate.text =data.convertDate(data.publishedAt)
+                tvDes.text= data.content
                 data.urlToImage?.let { image.loadImage(it) }
                 root.setOnClickListener {
                     onItemClicked?.invoke(data)
