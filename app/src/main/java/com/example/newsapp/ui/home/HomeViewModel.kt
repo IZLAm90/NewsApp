@@ -25,7 +25,8 @@ class HomeViewModel @Inject constructor(private val useCase: NewsUseCase) : Base
         pageSize: Int,
         lang: String,
         apiKey: String,
-        q: String?
+        q: String?,
+        isSearch:Boolean = false
     ) {
         executeSharedApi(_newsFlow) {
             useCase.getHeadLines(apiKey, q).onStart {
@@ -41,12 +42,18 @@ class HomeViewModel @Inject constructor(private val useCase: NewsUseCase) : Base
                 }
                 .collectLatest {
 //                    _newsFlow.emit(NetWorkState.Success(useCase.loadFromDb()))
-                    _newsFlow.emit(NetWorkState.Success(it?.articles?.sortedByDescending { it.publishedAt  }))
+                    if (isSearch){
+                        _newsFlow.emit(NetWorkState.Success(it?.articles?.sortedByDescending { it.publishedAt }))
+                    }else {
+                        _newsFlow.emit(NetWorkState.Success(it?.articles))
+                    }
                 }
         }
     }
     fun clearData(){
         executeSharedApi(_newsFlow)
-        { _newsFlow.emit(NetWorkState.Loading) }
+        {
+            _newsFlow.emit(NetWorkState.Loading)
+        }
     }
 }

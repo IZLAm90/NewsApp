@@ -87,6 +87,8 @@ dependencies {
     testImplementation("org.mockito:mockito-core:4.0.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
 
+    // pagination
+    implementation("androidx.paging:paging-runtime-ktx:3.2.0")
 }
 kapt {
     correctErrorTypes = true

@@ -17,6 +17,7 @@ class NewsUseCase @Inject constructor(private val repo: NewsRepo) {
             it.body()
         }
         responce.collect{
+            repo.resetDB()
             it?.articles?.let { it1 -> repo.saveToDB(it1) }
         }
        return responce
@@ -26,7 +27,6 @@ class NewsUseCase @Inject constructor(private val repo: NewsRepo) {
     suspend fun loadFromDb(): List<NewData> = withContext(Dispatchers.IO){
         repo.getFromDB()
     }
-
 
 
 }

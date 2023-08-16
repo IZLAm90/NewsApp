@@ -3,6 +3,7 @@ package com.example.newsapp.ui.home
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.data.model.NewData
@@ -40,7 +41,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                     15,
                     "EN",
                     com.app.data.remote.Constants.PrefKeys.APP_KEY,
-                    binding.etQuery.text.toString()
+                    binding.etQuery.text.toString(),true
                 )
                 viewModel.clearData()
             }
@@ -49,8 +50,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         binding.them.setOnClickListener {
             if (preferenc.load("theme", "").equals("light")) {
                 preferenc.save("theme", "light")
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_NO
+                )
             }else{
                 preferenc.save("theme", "dark")
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_YES
+                )
             }
         }
     }
@@ -65,6 +72,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         handleSharedFlow(viewModel.newsFlow, onSuccess = {
             it as List<NewData>
             adapter.AddAll(it)
+            hideKeyboard()
         })
         adapter.onItemClicked = { data ->
             val bundle = Bundle()
