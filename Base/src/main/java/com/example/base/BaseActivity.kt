@@ -33,6 +33,12 @@ abstract class BaseActivity(private val layoutResource: Int) : AppCompatActivity
         setActions()
     }
 
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase)
+
+
+    }
+
     open fun setActions() {}
 
 
