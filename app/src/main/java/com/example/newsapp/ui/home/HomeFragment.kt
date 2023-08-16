@@ -1,7 +1,6 @@
 package com.example.newsapp.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
@@ -14,7 +13,6 @@ import com.example.newsapp.ui.adapter.NewsAdapter
 import com.patient.base.BaseFragment
 import com.patient.data.cashe.PreferencesGateway
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment(R.layout.fragment_home) {
@@ -24,9 +22,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     private val adapter = NewsAdapter()
     private lateinit var preferenc: PreferencesGateway
 
-    override fun onStart() {
-        super.onStart()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
