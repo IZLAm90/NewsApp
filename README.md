@@ -15,6 +15,7 @@ The app consists of two screens: news list and news details.
 - Modularization for improved project structure.
 - Offline caching for better user experience.
 - Dark mode support for different user preferences.
+- Support Language Ar and En .
 - Unit tests for critical components.
 
 ## Technologies Used
