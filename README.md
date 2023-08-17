@@ -29,4 +29,6 @@ The app consists of two screens: news list and news details.
 - MVVM Architecture
 -Unit Test
 ## App Screens
-![WhatsApp Image 2023-08-16 at 10 59 12 PM](https://github.com/IZLAm90/NewsApp/assets/34184239/965074e2-98c1-4ea7-a931-e387d660e491)
+![Screenshot_newa3](https://github.com/IZLAm90/NewsApp/assets/34184239/ad23bb7a-b43d-4c1e-b179-9052db3a5b06)
+![Screenshot_news1](https://github.com/IZLAm90/NewsApp/assets/34184239/3bc54ca1-46ec-4c60-a952-6bef7799ca11)
+![Screenshot_news2](https://github.com/IZLAm90/NewsApp/assets/34184239/ef7cb7a7-373a-4ea3-976c-abc4ada6a436)
