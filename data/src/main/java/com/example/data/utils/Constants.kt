@@ -5,6 +5,8 @@ object Constants {
     object PrefKeys {
         var BASE_URL = ""
         var APP_KEY = ""
+        var THEME = "THEME"
+        var LANG = "LANG"
         const val TOKEN = "TOKEN"
         const val USER: String = "user"
     }

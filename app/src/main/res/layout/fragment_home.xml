@@ -33,6 +33,14 @@
             android:layout_marginHorizontal="20dp"
             android:id="@+id/them"/>
 
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/language_svgrepo_com"
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/lang"/>
+
 
     </LinearLayout>
 

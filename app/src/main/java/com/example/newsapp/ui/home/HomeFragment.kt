@@ -1,16 +1,21 @@
 package com.example.newsapp.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.app.data.remote.Constants.PrefKeys.LANG
+import com.app.data.remote.Constants.PrefKeys.THEME
 import com.example.data.model.NewData
+import com.example.newsapp.MainActivity
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentHomeBinding
 import com.example.newsapp.helper.isEditTextValid
 import com.example.newsapp.ui.adapter.NewsAdapter
 import com.patient.base.BaseFragment
+import com.patient.base.MyContextWrapper
 import com.patient.data.cashe.PreferencesGateway
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,7 +32,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
         preferenc = activity?.applicationContext?.let { PreferencesGateway(it) }!!
-        if (preferenc.load("theme", "").equals("light")) {
+        if (preferenc.load(THEME, "").equals("light")) {
             binding.them.setImageResource(R.drawable.moon_svgrepo_com)
         } else {
             binding.them.setImageResource(R.drawable.moon_svg)
@@ -36,7 +41,20 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         setUpNewRv()
         search()
         updateTheme()
+        language()
     }
+    private fun language(){
+        binding.lang.setOnClickListener{
+            if (preferenc.load(LANG,"").equals("ar")){
+                preferenc.save(LANG, "en")
+                startActivity(Intent(requireContext(),MainActivity::class.java))
+            }else{
+                preferenc.save(LANG, "ar")
+                startActivity(Intent(requireContext(),MainActivity::class.java))
+            }
+        }
+    }
+
 
     fun search() {
         binding.btnSearch.setOnClickListener {
@@ -53,15 +71,15 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     fun updateTheme() {
 
         binding.them.setOnClickListener {
-            if (preferenc.load("theme", "").equals("light")) {
-                preferenc.save("theme", "dark")
+            if (preferenc.load(THEME, "").equals("light")) {
+                preferenc.save(THEME, "dark")
                 binding.them.setImageResource(R.drawable.moon_svgrepo_com)
                 AppCompatDelegate.setDefaultNightMode(
                     AppCompatDelegate.MODE_NIGHT_YES
                 )
 
             } else {
-                preferenc.save("theme", "light")
+                preferenc.save(THEME, "light")
                 binding.them.setImageResource(R.drawable.moon_svg)
                 AppCompatDelegate.setDefaultNightMode(
                     AppCompatDelegate.MODE_NIGHT_NO
