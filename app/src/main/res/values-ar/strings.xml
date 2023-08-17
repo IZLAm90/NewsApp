@@ -6,4 +6,6 @@
     <string name="news">أخبار</string>
     <string name="news_app">NEWS APP</string>
     <string name="title">العنوان</string>
+    <string name="_5_hour_ago">5 hour ago</string>
+    <string name="source">Source</string>
 </resources>

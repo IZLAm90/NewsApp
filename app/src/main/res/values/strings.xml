@@ -5,5 +5,7 @@
     <string name="news">NEWS</string>
     <string name="news_app">NEWS APP</string>
     <string name="title">TITLE</string>
+    <string name="_5_hour_ago">5 hour ago</string>
+    <string name="source">Source</string>
 
 </resources>
