@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">login</string>
+    <string name="title_login">Title</string>
+    <string name="title_login_account_data">Login To Account</string>
+    <string name="title_user_name">title user name</string>
+    <string name="title_password">PassWord</string>
+    <string name="title_forget_pass">Forget Password</string>
+    <string name="title_have_not_account">"dont have an account "</string>
+    <string name="title_register">"rejester "</string>
+</resources>
